@@ -42,7 +42,7 @@ public class MorphFilters {
     }
 
     public static Mat dilation(Mat image){
-        int dilationSize = 3;
+        int dilationSize = 11;
         Mat element = getStructuringElement( MORPH_RECT,
                 new Size( 2*dilationSize + 1, 2*dilationSize+1 ),new Point(dilationSize,dilationSize));
         Mat imageOut = new Mat();

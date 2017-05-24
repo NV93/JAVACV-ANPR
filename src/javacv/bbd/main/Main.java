@@ -23,7 +23,7 @@ public class Main {
         MorphFilters morphFilters = new MorphFilters();
         String testImagePath = "C:\\Users\\nevyt\\Desktop\\BBD project JAVA\\JAVA ANPR BBD\\Resources\\Input\\IMG_20170505_134514.jpg";
         String testImagePath2 = "C:\\Users\\nevyt\\Desktop\\BBD project JAVA\\JAVA ANPR BBD\\Resources\\Input\\IMG_20170505_134455.jpg";
-        String testImagePath3 = "C:\\Users\\nevyt\\Desktop\\BBD project JAVA\\JAVA ANPR BBD\\Resources\\Input\\IMG_20170505_134505.jpg";
+        String testImagePath3 = "C:\\Users\\nevyt\\Desktop\\BBD project JAVA\\JAVA ANPR BBD\\Resources\\Input\\IMG_20170505_134801.jpg";
         String testImagePath4 = "C:\\Users\\nevyt\\Desktop\\BBD project JAVA\\JAVA ANPR BBD\\Resources\\Input\\IMG_20170505_134715.jpg";
         String testImagePath5 = "C:\\Users\\nevyt\\Desktop\\BBD project JAVA\\JAVA ANPR BBD\\Resources\\Input\\mazda.jpg";
         Mat testImage = imread(testImagePath);
@@ -39,7 +39,9 @@ public class Main {
 //        PreProcessing.algorithm3(testImage3);
 
 //        NumberPlateDetection.findNumberPlateContours(testImage5);
-        NumberPlateDetection.extractPlate(NumberPlateDetection.findNumberPlateContours(testImage2));
+//        NumberPlateDetection.findNumberPlateContours(testImage);
+
+    NumberPlateDetection.findNumberPlateContours(testImage,10000);
 
 
 
