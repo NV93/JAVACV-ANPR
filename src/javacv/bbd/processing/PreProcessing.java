@@ -3,15 +3,7 @@ package javacv.bbd.processing;
 import javacv.bbd.filters.MorphFilters;
 import javacv.bbd.main.Utils;
 import org.bytedeco.javacpp.opencv_core.*;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.MatOfPoint2f;
-import org.opencv.imgproc.Imgproc;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static org.bytedeco.javacpp.opencv_core.CV_8UC3;
 import static org.bytedeco.javacpp.opencv_core.bitwise_not;
 import static org.bytedeco.javacpp.opencv_highgui.imshow;
 import static org.bytedeco.javacpp.opencv_imgcodecs.imread;
@@ -22,6 +14,35 @@ import static org.bytedeco.javacpp.opencv_imgproc.*;
  * Created by nevyt on 5/24/2017.
  */
 public class PreProcessing {
+
+    public static Mat toThreshold(Mat image){
+        MorphFilters morphFilters = new MorphFilters();
+        Mat gray = morphFilters.rgbToGray(image);
+        Mat blur = morphFilters.gaussian(gray);
+        Mat thresh = morphFilters.thresholdOtsu(blur);
+        Mat open = morphFilters.opening(thresh,5);
+
+
+        return open;
+    }
+
+    public static Mat plateEdgeDetection(Mat image){
+        MorphFilters morphFilters = new MorphFilters();
+        Mat gray = morphFilters.rgbToGray(image);
+        Mat blur = morphFilters.gaussian(gray);
+        Mat canny = morphFilters.canny(blur, 25);
+
+        return canny;
+    }
+
+    public static Mat characterEdgeDetection(Mat image){
+        MorphFilters morphFilters = new MorphFilters();
+        Mat gray = morphFilters.rgbToGray(image);
+        Mat blur = morphFilters.gaussian(gray);
+        Mat canny = morphFilters.canny(blur, 11);
+
+        return canny;
+    }
 
 
     public static Mat algorithm1(Mat image) {
@@ -76,6 +97,33 @@ public class PreProcessing {
 
 
     }
+    public static void doErosion(Mat image){
+        Mat gray = MorphFilters.rgbToGray(image);
+        Mat erosion = MorphFilters.erosion(gray);
+        Mat thresh = MorphFilters.adaptiveThresh(erosion);
+        imwrite("erosion.jpg",thresh);
+    }
 
+    public static void doDilation(Mat image){
+        Mat gray = MorphFilters.rgbToGray(image);
+        Mat erosion = MorphFilters.dilation(gray);
+        Mat thresh = MorphFilters.adaptiveThresh(erosion);
+        imwrite("dilate.jpg",thresh);
+    }
 
+    public static void doOpen(Mat image){
+        Mat gray = MorphFilters.rgbToGray(image);
+        Mat thresh = MorphFilters.thresholdOtsu(gray);
+        Mat open = MorphFilters.opening(thresh,5);
+        imwrite("Opened.jpg",open);
+
+    }
+
+    public static void doClose(Mat image){
+        Mat gray = MorphFilters.rgbToGray(image);
+        Mat thresh = MorphFilters.thresholdOtsu(gray);
+        Mat close = MorphFilters.closing(thresh,5);
+        imwrite("Closed.jpg",close);
+
+    }
 }

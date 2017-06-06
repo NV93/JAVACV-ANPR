@@ -42,7 +42,7 @@ public class MorphFilters {
     }
 
     public static Mat dilation(Mat image){
-        int dilationSize = 11;
+        int dilationSize = 3;
         Mat element = getStructuringElement( MORPH_RECT,
                 new Size( 2*dilationSize + 1, 2*dilationSize+1 ),new Point(dilationSize,dilationSize));
         Mat imageOut = new Mat();
@@ -51,16 +51,16 @@ public class MorphFilters {
     }
 
     public static Mat blackHat(Mat image){
-        int morphSize = 24;
+        int morphSize = 3;
         Mat imageOut = new Mat();
-        Mat element = getStructuringElement(MORPH_RECT, new Size(2*morphSize + 1, 2*morphSize +1));
-        morphologyEx(imageOut,imageOut,MORPH_BLACKHAT,element);
+        Mat element = getStructuringElement(MORPH_ELLIPSE, new Size(2*morphSize + 1, 2*morphSize +1));
+        morphologyEx(image,imageOut,MORPH_BLACKHAT,element);
         return imageOut;
     }
 
     public static Mat thresholdOtsu(Mat image){
         Mat imageOut = new Mat();
-        threshold(imageOut,imageOut,74,255,CV_THRESH_OTSU);
+        threshold(image,imageOut,74,255,CV_THRESH_BINARY);
 
         return imageOut;
     }
@@ -94,14 +94,14 @@ public class MorphFilters {
     public static Mat closing(Mat image,int morphSize){
         Mat imageOut = new Mat();
         Mat element = getStructuringElement(MORPH_RECT,new Size(2*morphSize + 1, 2*morphSize +1), new Point(morphSize,morphSize));
-        morphologyEx(imageOut,imageOut,MORPH_CLOSE,element);
+        morphologyEx(image,imageOut,MORPH_CLOSE,element);
         return imageOut;
     }
 
     public static Mat opening(Mat image,int morphSize){
         Mat imageOut = new Mat();
         Mat element = getStructuringElement(MORPH_ELLIPSE,new Size(2*morphSize + 1, 2*morphSize +1));
-        morphologyEx(imageOut,imageOut,MORPH_OPEN,element);
+        morphologyEx(image,imageOut,MORPH_OPEN,element);
         //resizeWindow("Opening",1920,1080);
         //imshow("Opening",imageOut);
         //waitKey(-1);
@@ -121,7 +121,7 @@ public class MorphFilters {
         int morphSize = 24;
         Mat imageOut = new Mat();
         Mat element = getStructuringElement(MORPH_ELLIPSE,new Size(2*morphSize + 1, 2*morphSize +1));
-        morphologyEx(imageOut,imageOut,MORPH_TOPHAT,element);
+        morphologyEx(image,imageOut,MORPH_TOPHAT,element);
         return imageOut;
     }
 
